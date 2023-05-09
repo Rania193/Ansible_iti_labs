@@ -1,0 +1,25 @@
+- name: my play 1
+  gather_facts: false
+  hosts: web_servers
+  # vars:
+  #   package_name: nginx
+  #   package_status: latest
+  tasks:
+  - name: mytask1
+    tags: [update, always]
+    apt:
+      update_cache: true
+  - name: mytask2
+    tags: install
+    apt:
+     name: "{{ package_name }}"
+     state: "{{ package_status }}"
+  # - name: mytask3
+  #   copy:
+  #     src: ./index.html
+  #     dest: /var/www/html/index.html
+  # - name: mytask4
+  #   ansible.builtin.sysvinit: #because the contasiner is using SysV not systemd
+  #     name: nginx
+  #     state: restarted
+  #     enabled: yes

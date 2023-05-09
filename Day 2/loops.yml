@@ -1,0 +1,17 @@
+- name: my play 1
+  gather_facts: false
+  hosts: web_servers
+  tasks:
+  - name: mytask1
+    tags: [update, always]
+    apt:
+      update_cache: true
+  - name: mytask2 with loop
+    tags: install
+    apt:
+      name: "{{ item.package_name }}"
+      state: "{{ item.package_state }}"
+    loop:
+      - {package_name: "nginx", package_state: "latest"}
+      - {package_name: "curl", package_state: "latest"}
+      - {package_name: "ssh", package_state: "latest"}

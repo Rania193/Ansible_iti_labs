@@ -1,0 +1,35 @@
+- name: my play 1
+  #gather_facts: false
+  hosts: web_servers
+  tasks:
+  - name: mytask1
+    tags: [update, always]
+    apt:
+      update_cache: true
+  - name: mytask2 with condition
+    tags: install
+    apt:
+      name: nginx
+      state: latest
+    when: ansible_facts['distribution']=="Ubuntu"
+
+  - name: mytask3 with condition
+    tags: install
+    apt:
+      name: httpd
+      state: latest
+    when: ansible_facts['distribution']=="CentOS"
+
+  - name: mytask4
+    ansible.builtin.sysvinit: #because the contasiner is using SysV not systemd
+      name: nginx
+      state: restarted
+      enabled: yes
+    when: ansible_facts['distribution']=="Ubuntu"
+  
+  - name: mytask5
+    ansible.builtin.sysvinit: #because the contasiner is using SysV not systemd
+      name: httpd
+      state: restarted
+      enabled: yes
+    when: ansible_facts['distribution']=="CentOS"

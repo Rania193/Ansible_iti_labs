@@ -1,0 +1,31 @@
+- name: my play 1
+  gather_facts: false
+  hosts: web_servers
+  # vars:
+  #   package_name: nginx
+  #   package_status: latest
+  tasks:
+  - name: mytask1
+    command: ls /var/www/html
+    register: my_result
+    tags: [cat, always]
+
+  - name: mytask2
+    tags: debugging
+    debug:
+      var: my_result
+
+  - name: mytask3
+    tags: installation
+    apt:
+     name: nginx
+     state: latest
+    register: result
+
+  - name: mytask4
+    tags: restart_service
+    ansible.builtin.sysvinit: #because the contasiner is using SysV not systemd
+      name: nginx
+      state: restarted
+      enabled: yes
+    when: (result.changed) or (not (result.failed))
