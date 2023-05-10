@@ -1,0 +1,9 @@
+- name: play1
+  hosts: web_servers
+  vars:
+    welcome_msg: Hello there hey hi yohoo
+  tasks:
+  - name: task1
+    template:
+      src: ./index.html.j2
+      dest: /var/www/html/index.html

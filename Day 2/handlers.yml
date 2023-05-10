@@ -1,0 +1,14 @@
+- name: my play with handlers
+  hosts: all
+  tasks:
+  - name: my task1 with handlers
+    apt:
+      name: nginx
+    notify: my_handler
+    changed_when: 1==1
+  handlers:
+  - name: my_handler
+    ansible.builtin.sysvinit: #because the contasiner is using SysV not systemd
+      name: nginx
+      state: restarted
+      enabled: yes
