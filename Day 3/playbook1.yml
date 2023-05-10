@@ -1,0 +1,10 @@
+- name: my play 1
+  gather_facts: false
+  hosts: web_servers
+  roles:
+    - web
+
+# - name: my play 2
+#   hosts: db_servers
+#   roles:
+#     - db

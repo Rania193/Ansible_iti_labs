@@ -1,0 +1,5 @@
+welcome_msg: Hey there!
+package_name: nginx
+my_files:
+  - script.js
+  - style.css
